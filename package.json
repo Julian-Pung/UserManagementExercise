@@ -8,6 +8,7 @@
     "dev:client": "npm run dev --prefix client",
     "dev:server": "nodemon server/index.js",
     "dev": "npm-run-all -p -r dev:client dev:server",
+    "install-packages": "npm install && cd client && npm install"
   },
   "repository": {
     "type": "git",
