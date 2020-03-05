@@ -4,10 +4,10 @@
   "description": "Development of a \"User Management\" REST service with underlying data model and a simple VueJS-Frontend",
   "main": "index.js",
   "scripts": {
-	"start": "node server/index.js",
-	"dev:client": "npm run dev --prefix client",
-	"dev:server": "nodemon server/index.js",
-    "dev": "npm-run-all -p -r dev:client dev:server"
+    "start": "node server/index.js",
+    "dev:client": "npm run dev --prefix client",
+    "dev:server": "nodemon server/index.js",
+    "dev": "npm-run-all -p -r dev:client dev:server",
   },
   "repository": {
     "type": "git",
