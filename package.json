@@ -1,0 +1,31 @@
+{
+  "name": "usermanagementexercise",
+  "version": "1.0.0",
+  "description": "Development of a \"User Management\" REST service with underlying data model and a simple VueJS-Frontend",
+  "main": "index.js",
+  "scripts": {
+	"start": "node server/index.js",
+	"dev:client": "npm run dev --prefix client",
+	"dev:server": "nodemon server/index.js",
+    "dev": "npm-run-all -p -r dev:client dev:server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Julian-Pung/UserManagementExercise.git"
+  },
+  "author": "Julian Pung",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Julian-Pung/UserManagementExercise/issues"
+  },
+  "homepage": "https://github.com/Julian-Pung/UserManagementExercise#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2",
+    "npm-run-all": "^4.1.5"
+  }
+}
