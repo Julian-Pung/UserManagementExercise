@@ -113,6 +113,11 @@ class DatabaseService {
 		);
 	}
 
+	// deletes the given user
+	deleteUser(userId) {
+		return this.executeQuery('DELETE FROM user WHERE id = ?', userId);
+	}
+
 	// returns an array containing all users from the datbabase
 	// todo
 	getUsers() {
@@ -185,4 +190,4 @@ class DatabaseService {
 	}
 }
 
-module.exports = DatabaseService
+module.exports = new DatabaseService();
