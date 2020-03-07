@@ -16,7 +16,7 @@ const db = require('../db/database');
 router.get('/', (req, res) => {
 	db.getRights()
 		.then(rights => res.json(rights))
-		.catch(error => res.status(500).json({error}));
+		.catch(error => res.status(500).json({ error }));
 });
 
 // get the right with the given id
@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
 	const rightName = req.body;
 	db.createRole(rightName)
 		.then(newRight => res.json(newRight))
-		.catch(error => res.status(500).json({error}));
+		.catch(error => res.status(500).json({ error }));
 });
 
 // delete the right with the given id
@@ -38,7 +38,7 @@ router.delete('/:id', (req, res) => {
 	const rightId = req.params.id;
 	db.deleteRole(rightId)
 		.then(() => res.sendStatus(200))
-		.catch(error => res.status(500).json({error}));
+		.catch(error => res.status(500).json({ error }));
 });
 
 module.exports = router;

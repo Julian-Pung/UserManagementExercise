@@ -3,7 +3,6 @@ const sqlite = require('sqlite3').verbose();
 // defines a service class to create, insert, update and delete data from the database
 // all query methods return a promise to handle asynchronious database calls
 class DatabaseService {
-
 	constructor() {
 		this.initialize();
 	}
@@ -61,8 +60,7 @@ class DatabaseService {
 				});
 			});
 		});
-	};
-
+	}
 
 	// creates a new role with the given name
 	createRole(roleName) {
@@ -103,14 +101,10 @@ class DatabaseService {
 	// creates a new user with the given attributes
 	// the user object is expected to have the attributes givenname, surname, email, phone
 	createUser(user) {
-		return this.executeQuery(
-			'INSERT INTO user (givenname, surname, email, phone) VALUES ($givenname, $surname, $email, $phone)',
-			this.prepareParams(user),
-			userId => ({
-				...user,
-				id: userId
-			})
-		);
+		return this.executeQuery('INSERT INTO user (givenname, surname, email, phone) VALUES ($givenname, $surname, $email, $phone)', this.prepareParams(user), userId => ({
+			...user,
+			id: userId
+		}));
 	}
 
 	// deletes the given user

@@ -17,7 +17,7 @@ const db = require('../db/database');
 router.get('/', (req, res) => {
 	db.getRoles()
 		.then(roles => res.json(roles))
-		.catch(error => res.status(500).json({error}));
+		.catch(error => res.status(500).json({ error }));
 });
 
 // get the role with the given id
@@ -31,7 +31,7 @@ router.post('/', (req, res) => {
 	const roleName = req.body;
 	db.createRole(roleName)
 		.then(newRole => res.json(newRole))
-		.catch(error => res.status(500).json({error}));
+		.catch(error => res.status(500).json({ error }));
 });
 
 // delete the role with the given id
@@ -39,7 +39,7 @@ router.delete('/:id', (req, res) => {
 	const roleId = req.params.id;
 	db.deleteRole(roleId)
 		.then(() => res.sendStatus(200))
-		.catch(error => res.status(500).json({error}));
+		.catch(error => res.status(500).json({ error }));
 });
 
 // assign one or more rights to the role
@@ -48,7 +48,7 @@ router.post('/:id', (req, res) => {
 	const rightIds = req.body;
 	db.assignRightsToRole(roleId, rightIds)
 		.then(() => res.sendStatus(200))
-		.catch(error => res.status(500).json({error}));
+		.catch(error => res.status(500).json({ error }));
 });
 
 module.exports = router;
