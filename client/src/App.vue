@@ -6,8 +6,8 @@
 		</v-app-bar>
 
 		<v-navigation-drawer app clipped>
-			<v-list dense>
-				<v-list-item v-for="item in menuItems" :key="item.title" link>
+			<v-list dense nav>
+				<v-list-item v-for="item in menuItems" :key="item.title" link :to="item.route">
 					<v-list-item-icon>
 						<v-icon>{{ item.icon }}</v-icon>
 					</v-list-item-icon>
@@ -31,15 +31,18 @@
 			menuItems: [
 				{
 					icon: 'mdi-account',
-					title: 'Benutzer'
+					title: 'Benutzer',
+					route: '/users'
 				},
 				{
 					icon: 'mdi-account-box-outline',
-					title: 'Rollen'
+					title: 'Rollen',
+					route: '/roles'
 				},
 				{
 					icon: 'mdi-security',
-					title: 'Berechtigungen'
+					title: 'Berechtigungen',
+					route: 'rights'
 				}
 			]
 		})
