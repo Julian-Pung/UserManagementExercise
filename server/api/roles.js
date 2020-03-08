@@ -28,7 +28,7 @@ router.get('/:id', (req, res) => {
 
 // create a new role
 router.post('/', (req, res) => {
-	const roleName = req.body;
+	const roleName = req.body.name;
 	db.createRole(roleName)
 		.then(newRole => res.json(newRole))
 		.catch(error => res.status(500).json({ error }));

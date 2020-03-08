@@ -27,8 +27,8 @@ router.get('/:id', (req, res) => {
 
 // create a new right
 router.post('/', (req, res) => {
-	const rightName = req.body;
-	db.createRole(rightName)
+	const rightName = req.body.name;
+	db.createRight(rightName)
 		.then(newRight => res.json(newRight))
 		.catch(error => res.status(500).json({ error }));
 });
@@ -36,7 +36,7 @@ router.post('/', (req, res) => {
 // delete the right with the given id
 router.delete('/:id', (req, res) => {
 	const rightId = req.params.id;
-	db.deleteRole(rightId)
+	db.deleteRight(rightId)
 		.then(() => res.sendStatus(200))
 		.catch(error => res.status(500).json({ error }));
 });
