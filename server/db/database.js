@@ -62,6 +62,22 @@ class DatabaseService {
 		});
 	}
 
+	// utility function to shorten repeating query code patterns
+	// expects a select and returns a result set
+	executeQueryAll(sql, params = []) {
+		return new Promise((resolve, reject) => {
+			this.execute(db => {
+				db.all(sql, params, function(err, rows) {
+					if (err) {
+						reject(err);
+					} else {
+						resolve(rows);
+					}
+				});
+			});
+		});
+	}
+
 	// creates a new role with the given name
 	createRole(roleName) {
 		return this.executeQuery('INSERT INTO role(name) VALUES (?)', roleName, roleId => ({
@@ -77,7 +93,7 @@ class DatabaseService {
 
 	// returns an array containing all roles
 	getRoles() {
-		// todo
+		return this.executeQueryAll('SELECT * FROM role');
 	}
 
 	// creates a new right with the given name
@@ -95,7 +111,7 @@ class DatabaseService {
 
 	// returns an array containing all rights
 	getRights() {
-		// todo
+		return this.executeQueryAll('SELECT * FROM right');
 	}
 
 	// creates a new user with the given attributes
@@ -112,26 +128,25 @@ class DatabaseService {
 		return this.executeQuery('DELETE FROM user WHERE id = ?', userId);
 	}
 
-	// returns an array containing all users from the datbabase
-	// todo
+	// returns an array containing all users from the datbabase including assigned roles and rights
 	getUsers() {
-		const selectQuery = `
-			SELECT user.*, role.id, role.name, right.id, right.name
-			FROM user
-			LEFT JOIN user_role ON user_role.user = user.id
-			LEFT JOIN role ON role.id = user_role.role
-			LEFT JOIN role_right ON role_right.role = role.id
-			LEFT JOIN right ON right.id = role_right.right`;
-		return new Promise((resolve, reject) => {
-			this.execute(db => {
-				db.all(selectQuery, [], function(err, rows) {
-					if (err) {
-						reject(err);
-					} else {
-						resolve(rows);
-					}
-				});
-			});
+		return this.executeQueryAll("SELECT user.*, user.id AS [id], user.givenname || ' ' || user.surname AS fullname FROM user").then(async users => {
+			for (let user of users) {
+				const roles = await this.executeQueryAll('SELECT role AS [id], role.name FROM user_role INNER JOIN role ON user_role.role = role.id WHERE user_role.user = ?', user.id);
+				user.roles = roles;
+				const rights = await this.executeQueryAll(
+					`
+					SELECT right.id AS [id], right.name
+					FROM user_role
+					INNER JOIN role ON role.id = user_role.role
+					INNER JOIN role_right ON role_right.role = role.id
+					INNER JOIN right ON right.id = role_right.right
+					WHERE user_role.user = ?`,
+					user.id
+				);
+				user.rights = rights;
+			}
+			return users;
 		});
 	}
 
