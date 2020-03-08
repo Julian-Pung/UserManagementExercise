@@ -7,13 +7,17 @@ const app = express();
 const port = process.env.port || 80;
 const pubDir = path.join(__dirname, 'public');
 
-// Middleware + API
+// Standard middleware
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.static(pubDir));
-app.use('/users', require('./api/users'));
-app.use('/roles', require('./api/roles'));
-app.use('/rights', require('./api/rights'));
+
+// API
+const api = express.Router();
+api.use('/users', require('./api/users'));
+api.use('/roles', require('./api/roles'));
+api.use('/rights', require('./api/rights'));
+app.use('/api', api);
 
 // Redirect to index.html for single page application
 app.get(/.*/, (req, res) => {
