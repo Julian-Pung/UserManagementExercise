@@ -52,6 +52,11 @@
 					</template>
 				</v-card>
 			</v-col>
+			<v-col v-if="users.length === 0">
+				<v-alert type="info" color="orange darken-2" border="left" colored-border elevation="1">
+					Keine Benutzer vorhanden. Legen Sie Ihren ersten an!
+				</v-alert>
+			</v-col>
 		</v-row>
 
 		<v-btn fab fixed bottom right dark color="pink" @click="openUserDialog">
